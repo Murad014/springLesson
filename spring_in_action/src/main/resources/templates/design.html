@@ -12,6 +12,11 @@
     <div style="margin-top: 50px">
         <img th:src="@{/images/img.png}" alt="taco image" width="200" height="200"/>
         <form method="POST" th:object="${taco}">
+            <span class="text-danger" th:if="${#fields.hasErrors('ingredients')}"
+                    th:errors="*{ingredients}">
+                Ingredient Error Message
+            </span>
+
             <h6>WRAP</h6>
             <div th:each="ingredient: ${wrap}">
                 <input type="checkbox"
@@ -55,6 +60,11 @@
 
             <br>
             <div>
+                <span class="text-danger"   th:if="${#fields.hasErrors('name')}"
+                                            th:errors="*{name}">
+
+                </span>
+                <br />
                 <label for="Taco Name"> Taco Name:  </label>
                     <input id="Taco Name" type="text" th:field="*{name}" />
             </div>
