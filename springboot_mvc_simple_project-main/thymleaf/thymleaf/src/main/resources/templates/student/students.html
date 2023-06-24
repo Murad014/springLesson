@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Students</title>
+
+</head>
+<body>
+
+    <div class="container">
+        <div>
+            <form method="POST" th:action="@{/logout}">
+                <input type="submit" value="Logout" />
+            </form>
+
+        </div>
+        <div style="margin-top: 30px">
+            <h3>Student list</h3>
+        </div>
+        <hr>
+        <div style="margin-bottom: 10px;">
+            <a class="btn btn-success" style="color:white" th:href="@{/students/addForm}">Add Student</a>
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr th:each="student: ${students}">
+                    <td th:text="${student.getId()}"></td>
+                    <td th:text="${student.getFirstName()}"></td>
+                    <td th:text="${student.getLastName()}"></td>
+                    <td th:text="${student.getEmail()}"></td>
+                    <td th:text="${student.getPhone()}"></td>
+                    <td>
+                        <a th:href="@{/students/updateForm(id=${student.getId()})}" class="btn btn-primary" th:text="Update"></a>
+                        <a th:href="@{/students/delete(id=${student.getId()})}" class="btn btn-danger" th:text="Delete"></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+</html>

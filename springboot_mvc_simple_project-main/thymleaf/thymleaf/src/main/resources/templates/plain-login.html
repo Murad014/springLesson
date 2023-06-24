@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center">Login</h2>
+            <form th:action="@{/authenticateTheUser}" method="POST" >
+                <span th:if="${param.error}">
+                    <i style="color: red">Username or password is incorrect.</i>
+                </span>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

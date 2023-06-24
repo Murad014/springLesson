@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <title>Students</title>
+</head>
+<body>
+
+    <div style="margin-top: 20px" class="container">
+<!--        <div th:if="${#session.getAttribute('isTrue') != null}">-->
+<!--            <div class="alert alert-danger" role="alert">-->
+<!--                <p th:text="${#session.getAttribute('errorMessage')}" />-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <h2>Student list</h2>
+        <hr>
+        <div style="margin-bottom: 20px;">
+            <a th:href="@{/students/showFormAdd}" type="button" class="btn btn-primary" >Add</a>
+
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="student: ${students}">
+
+                    <td th:text="${student.getId()}"></td>
+                    <td th:text="${student.getFirstName()}"></td>
+                    <td th:text="${student.getLastName()}"></td>
+                    <td th:text="${student.getEmail()}"></td>
+                    <td th:text="${student.getPhone()}"></td>
+                    <td>
+                        <a th:href="@{/students/showFormUpdate(id=${student.getId()})}" class="btn btn-info">Update</a>
+                        <a th:href="@{/students/delete(id=${student.getId()})}" class="btn btn-danger"
+                            onclick="if(!(confirm('Are you sure'))) return false">Delete</a>
+                    </td>
+
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+
+</html>
