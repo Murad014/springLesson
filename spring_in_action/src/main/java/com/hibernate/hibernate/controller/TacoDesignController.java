@@ -1,6 +1,9 @@
 package com.hibernate.hibernate.controller;
 
 
+import com.hibernate.hibernate.config.DataSourceSingleton;
+import com.hibernate.hibernate.data.jdbc.IngredientRepository;
+import com.hibernate.hibernate.data.jdbc.RawJdbcIngredientRepository;
 import com.hibernate.hibernate.entity.Ingredient;
 import com.hibernate.hibernate.entity.Ingredient.*;
 import com.hibernate.hibernate.entity.Taco;
@@ -8,15 +11,15 @@ import com.hibernate.hibernate.entity.TacoOrder;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.Iterators;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import javax.sql.DataSource;
+import java.sql.DriverManager;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -61,6 +64,10 @@ public class TacoDesignController {
 
     @GetMapping
     public String tacoForm(){
+
+        IngredientRepository ingredientRepository = new RawJdbcIngredientRepository(DataSourceSingleton.getDataSource());
+        Optional<Ingredient> ingredientFromDB =  ingredientRepository.findById("FLTO");
+        System.out.println(ingredientFromDB);
         return "design";
     }
 
