@@ -38,6 +38,7 @@ public class RawJdbcIngredientRepository implements IngredientRepository {
             Ingredient ingredient = null;
 
             if(resultSet.next()){
+
                 ingredient = new Ingredient(
                         resultSet.getString("id"),
                         resultSet.getString("name"),
@@ -45,7 +46,9 @@ public class RawJdbcIngredientRepository implements IngredientRepository {
 
                 );
             }
+            assert ingredient != null;
             return Optional.of(ingredient);
+
         }catch(SQLException e){
 
 

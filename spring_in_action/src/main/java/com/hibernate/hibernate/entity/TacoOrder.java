@@ -35,8 +35,12 @@ public class TacoOrder {
     private String ccCVV;
 
     private List<Taco> tacos = new ArrayList<>();
+
+    private Date placedAt;
     public void addTaco(Taco taco) {
         this.tacos.add(taco);
     }
+
+
 
 }
