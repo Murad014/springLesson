@@ -1,0 +1,66 @@
+CREATE DATABASE hibernate_core;
+USE hibernate_core;
+
+
+SELECT * FROM student;
+DELETE FROM student WHERE id = 4;
+CREATE TABLE student(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100)
+);
+
+SELECT * FROM lesson;
+CREATE TABLE lesson(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    lesson_name VARCHAR(50),
+    student_id INT,
+    CONSTRAINT `student_id` FOREIGN KEY (student_id) REFERENCES student(id)
+);
+
+
+SELECT * FROM instructor;
+DELETE FROM instructor WHERE id = 4;
+CREATE TABLE instructor(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    instructor_detail_id INT,
+    CONSTRAINT `detail` FOREIGN KEY (instructor_detail_id) REFERENCES instructor_detail(id)  
+); 
+
+SELECT * FROM instructor_detail;
+DELETE FROM instructor_detail WHERE id = 4;
+CREATE TABLE instructor_detail(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    youtube_channel VARCHAR(200) DEFAULT NULL,
+    hobby VARCHAR(200) DEFAULT NULL
+);
+
+SELECT * FROM course;
+DELETE FROM course WHERE id = 3;
+CREATE TABLE course(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    title_course VARCHAR(200) UNIQUE,
+    instructor_id INT,
+    CONSTRAINT `instructor_id` FOREIGN KEY(instructor_id) REFERENCES instructor(id)
+);
+
+SELECT * FROM review;
+DELETE FROM review WHERE id = 2;
+CREATE TABLE review(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    comment VARCHAR(500),
+    course_id INT,
+    CONSTRAINT `review-course-comment` FOREIGN KEY (course_id) REFERENCES course(id)
+);
+
+SELECT * FROM course_student;
+CREATE  TABLE course_student(
+	course_id INT NOT NULL,
+    student_id INT NOT NULL,
+    PRIMARY KEY (course_id, student_id),
+    FOREIGN KEY (course_id) REFERENCES course(id),
+    FOREIGN KEY (student_id) REFERENCES student(id)
+    
+);
