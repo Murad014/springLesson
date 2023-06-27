@@ -3,6 +3,7 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,7 +29,32 @@ public class Student {
     })
     private List<Lesson> lessons;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
+    @JoinTable(
+            name="course_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses;
 
+
+    public void addCourse(Course course){
+        if(courses == null)
+            courses = new ArrayList<>();
+        courses.add(course);
+    }
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
     public Student(String firstName, String lastName) {
         this.firstName = firstName;

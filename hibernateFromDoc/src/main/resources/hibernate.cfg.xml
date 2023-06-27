@@ -17,6 +17,7 @@
         <mapping class="org.example.entity.Instructor"/>
         <mapping class="org.example.entity.InstructorDetail"/>
         <mapping class="org.example.entity.Course"/>
+        <mapping class="org.example.entity.Review"/>
 
 
     </session-factory>

@@ -21,7 +21,7 @@ public class Review {
 
     }
 
-    public Review(String comment, Course course) {
+    public Review(String comment) {
         this.comment = comment;
     }
 

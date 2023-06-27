@@ -29,23 +29,63 @@ public class App
         HibernateUtil sessionFactory = new HibernateUtil("hibernate.cfg.xml");
         Session session = sessionFactory.getSessionFactory().openSession();
 
-
-        /*  Methods  */
-
-//        app.add(session);
-//        app.fetchAll(session);
-
-       // app.addLesson(session);
-
-        /* End - Method */
-
-        //app.addInstructor(session);
-//        app.addCourse(session);
-//        app.fethAllInstructors(session);
-//        app.fetchInstructorById(session);
-//        app.getInstructorByIdHQ(session);
+        app.findCourse(session);
 
 
+    }
+
+    public void findCourse(Session session){
+        Course course = session.find(Course.class, 3);
+        List<Student> students = course.getStudents();
+        for (Student student: students){
+            System.out.println(student);
+
+        }
+
+    }
+
+
+    public void addStudent(Session session){
+        Student newStudent = new Student("Ali", "Memmedov");
+        Student newStudent02 = new Student("Jalal", "Xelilli");
+        Course courseFromDB = session.find(Course.class, 3);
+        courseFromDB.addStudent(newStudent);
+        courseFromDB.addStudent(newStudent02);
+
+        session.getTransaction().begin();
+        session.merge(courseFromDB);
+        session.getTransaction().commit();
+
+
+
+
+
+
+    }
+
+
+
+    public void deleteCourse(Session session){
+        session.beginTransaction();
+        Course courseFromDB = session.find(Course.class, 4);
+        session.remove(courseFromDB);
+        session.getTransaction().commit();
+        System.out.printf("Deleted course: %s%n", courseFromDB);
+    }
+
+    public void getCourseReview(Session session){
+        Course course = session.find(Course.class, 1);
+        System.out.println(course.getReviews());
+    }
+
+    public void addReview(Session session){
+        Course getCourseFromDB = session.find(Course.class, 4);
+        Review newReview = new Review("Cool course");
+        getCourseFromDB.addReview(newReview);
+        session.beginTransaction();
+        session.merge(getCourseFromDB);
+        session.getTransaction().commit();
+        System.out.println("New Review: " + newReview);
     }
 
 
@@ -68,8 +108,8 @@ public class App
     }
 
     public void addCourse(Session session){
-        Instructor instructorFromDB = session.find(Instructor.class, 3);
-        Course course = new Course("Java SE", instructorFromDB);
+        Instructor instructorFromDB = session.find(Instructor.class, 4);
+        Course course = new Course("Java EE", instructorFromDB);
 
         session.beginTransaction();
         session.merge(course);
@@ -81,10 +121,9 @@ public class App
         System.out.println("Adding Instructor...");
         session.beginTransaction();
 
-        InstructorDetail newInstructorDetail = new InstructorDetail("http://youtube.com/murad", "Coding.");
+        InstructorDetail newInstructorDetail = new InstructorDetail("http://youtube.com/murad", "Coding");
         Instructor newInstructor = new Instructor("Murad", "Guliyev", newInstructorDetail);
-        session.save(newInstructor);
-
+        session.merge(newInstructor);
         session.getTransaction().commit();
 
         System.out.println("Added: " + newInstructor);
